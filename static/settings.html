@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings | AI Receptionist</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/dashboard.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+
+      <!-- ══ SIDEBAR ══════════════════════════════════════════════════════ -->
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.7 6.37a2 2 0 012-2.18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L9.91 12a16 16 0 006.29 6.29l1.87-1.87a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+          <div>
+            <p class="brand-name">AI Receptionist</p>
+            <div class="brand-online"><span class="dot-green"></span>Online</div>
+          </div>
+        </div>
+
+        <nav>
+          <p class="nav-group-label">Workspace</p>
+          <div class="nav-items">
+            <a class="nav-item" href="/dashboard#overview">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+              Overview
+            </a>
+            <a class="nav-item" href="/dashboard#calls">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.7 6.37a2 2 0 012-2.18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L9.91 12a16 16 0 006.29 6.29l1.87-1.87a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+              Calls
+            </a>
+            <a class="nav-item" href="/dashboard#appointments">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Appointments
+            </a>
+            <a class="nav-item" href="/dashboard#customers">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+              Customers
+            </a>
+            <a class="nav-item" href="/dashboard#analytics">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              Analytics
+            </a>
+          </div>
+
+          <p class="nav-group-label">System</p>
+          <div class="nav-items">
+            <a class="nav-item active" href="/settings">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M5.34 18.66l-1.41 1.41M19.07 19.07l-1.41-1.41M5.34 5.34L3.93 3.93M22 12h-2M4 12H2M12 22v-2M12 4V2"/></svg>
+              Settings
+            </a>
+          </div>
+        </nav>
+
+        <div class="sidebar-chip">
+          <div class="chip-dot"></div>
+          <div>
+            <p class="chip-title">AI Engine</p>
+            <p class="chip-sub">Whisper · spaCy · gTTS</p>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ══ MAIN ═════════════════════════════════════════════════════════ -->
+      <div class="workspace">
+        <header class="topbar">
+          <div>
+            <h1 class="page-title">Settings</h1>
+            <p class="page-sub">System configuration</p>
+          </div>
+          <div class="topbar-actions">
+            <button class="tb-avatar" aria-label="Profile">AD</button>
+          </div>
+        </header>
+
+        <main class="settings-shell">
+          <section class="settings-hero">
+            <div>
+              <p class="eyebrow">Control Center</p>
+              <h2>Manage reception behavior & notification workflows.</h2>
+              <p class="hero-description">Adjust business settings, AI reception controls, and sync preferences from a single operational panel.</p>
+            </div>
+            <div class="settings-actions" style="margin-top: 16px;">
+              <a class="secondary-button" href="/dashboard">Back to dashboard</a>
+              <button class="primary-button" id="save-button">Save changes</button>
+            </div>
+          </section>
+
+          <form id="settings-form" class="settings-grid">
+
+            <!-- ── Business Description ───────────────────────────────── -->
+            <article class="card" style="grid-column: 1 / -1;">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Business Profile</h3>
+                  <p class="card-hint">Describe your business in plain language — the AI extracts everything automatically.</p>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="business-profile">Business description</label>
+                <textarea
+                  id="business-profile"
+                  name="businessProfile"
+                  rows="5"
+                  placeholder="Example: We are a hair salon called Style &amp; Co. We offer haircuts, beard trims, shaves, fades, hair coloring and hair treatments. We are open Monday to Saturday from 9 AM to 7 PM. We are located in Pune, Maharashtra."
+                  style="resize: vertical; font-family: inherit; font-size: 0.95rem; line-height: 1.6; padding: 12px 16px; background: var(--surface-2); border: 1.5px solid var(--border); border-radius: 10px; color: var(--text-primary); width: 100%; box-sizing: border-box; transition: border-color 0.2s;"
+                ></textarea>
+                <p class="field-note" style="margin-top: 6px;">Include: business name, services offered, opening hours, and location. The AI will understand and use all of it.</p>
+              </div>
+
+              <div style="margin-top: 12px;">
+                <button type="button" id="btn-preview-profile" class="secondary-button" style="display: inline-flex; align-items: center; gap: 8px;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                  Preview parsed profile
+                </button>
+              </div>
+
+              <!-- Preview panel (hidden until button clicked) -->
+              <div id="profile-preview" style="display:none; margin-top: 16px; padding: 16px; background: var(--surface-2); border: 1.5px solid var(--border); border-radius: 12px;">
+                <p style="font-weight: 600; margin-bottom: 12px; color: var(--accent);">🤖 What the AI understood:</p>
+                <table style="width:100%; border-collapse: collapse; font-size: 0.9rem;">
+                  <tr><td style="padding: 6px 0; color: var(--text-muted); width: 140px;">Business name</td><td id="prev-name" style="color: var(--text-primary); font-weight: 500;"></td></tr>
+                  <tr><td style="padding: 6px 0; color: var(--text-muted);">Services</td><td id="prev-services" style="color: var(--text-primary);"></td></tr>
+                  <tr><td style="padding: 6px 0; color: var(--text-muted);">Hours</td><td id="prev-hours" style="color: var(--text-primary);"></td></tr>
+                  <tr><td style="padding: 6px 0; color: var(--text-muted);">Location</td><td id="prev-location" style="color: var(--text-primary);"></td></tr>
+                </table>
+                <p id="prev-warning" style="display:none; margin-top: 10px; color: #f59e0b; font-size: 0.85rem;">⚠️ Some details could not be extracted. Try rephrasing your description.</p>
+              </div>
+            </article>
+
+            <!-- ── Timezone ───────────────────────────────────────────── -->
+            <article class="card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Regional Settings</h3>
+                  <p class="card-hint">Timezone for scheduling and logs.</p>
+                </div>
+              </div>
+              <div class="field-group">
+                <label for="timezone">Timezone</label>
+                <select id="timezone" name="timezone">
+                  <option value="Asia/Kolkata">Asia/Kolkata (IST)</option>
+                  <option value="America/New_York">America/New_York (EST)</option>
+                  <option value="America/Chicago">America/Chicago (CST)</option>
+                  <option value="America/Los_Angeles">America/Los_Angeles (PST)</option>
+                  <option value="Europe/London">Europe/London (GMT)</option>
+                  <option value="UTC">UTC</option>
+                </select>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Reception Settings</h3>
+                  <p class="card-hint">Control how the AI answers & hands off requests.</p>
+                </div>
+              </div>
+              <div class="field-group toggle-group">
+                <label>Auto-answer incoming calls</label>
+                <label class="toggle-switch">
+                  <input id="auto-answer" type="checkbox" name="autoAnswer" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="field-group">
+                <label for="fallback-action">Unrecognized call fallback</label>
+                <select id="fallback-action" name="fallbackAction">
+                  <option value="email">Notify by email</option>
+                  <option value="voicemail">Capture voicemail</option>
+                  <option value="hold">Place on hold</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label for="hold-time">Maximum hold time</label>
+                <select id="hold-time" name="holdTime">
+                  <option value="30">30 seconds</option>
+                  <option value="60">60 seconds</option>
+                  <option value="120">120 seconds</option>
+                </select>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Notifications</h3>
+                  <p class="card-hint">Manage alerts for missed calls.</p>
+                </div>
+              </div>
+              <div class="field-group toggle-group">
+                <label>Email alerts</label>
+                <label class="toggle-switch">
+                  <input id="email-alerts" type="checkbox" name="emailAlerts" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="field-group toggle-group">
+                <label>Daily digest</label>
+                <label class="toggle-switch">
+                  <input id="daily-digest" type="checkbox" name="dailyDigest" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="field-group">
+                <label for="alert-recipient">Primary alert recipient</label>
+                <input id="alert-recipient" name="alertRecipient" type="email" placeholder="reception@business.com" />
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Data & Sync</h3>
+                  <p class="card-hint">Keep your calendar & data aligned.</p>
+                </div>
+              </div>
+              <div class="field-group toggle-group">
+                <label>Calendar sync</label>
+                <label class="toggle-switch">
+                  <input id="calendar-sync" type="checkbox" name="calendarSync" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="field-group">
+                <label for="retention-period">Data retention</label>
+                <select id="retention-period" name="retentionPeriod">
+                  <option value="30">30 days</option>
+                  <option value="90">90 days</option>
+                  <option value="180">180 days</option>
+                  <option value="365">1 year</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label for="sync-status">Sync status</label>
+                <p id="sync-status" class="field-note" style="margin-top: 8px;">No active sync in progress.</p>
+              </div>
+            </article>
+
+          </form>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      const settingsForm = document.getElementById('settings-form');
+      const saveButton = document.getElementById('save-button');
+      const syncStatus = document.getElementById('sync-status');
+      const btnPreview = document.getElementById('btn-preview-profile');
+      const profilePreview = document.getElementById('profile-preview');
+
+      // Keys that map to a standard input/select/textarea by camelCase -> kebab-case id
+      const keys = [
+        'businessProfile',
+        'timezone',
+        'autoAnswer',
+        'fallbackAction',
+        'holdTime',
+        'emailAlerts',
+        'dailyDigest',
+        'alertRecipient',
+        'calendarSync',
+        'retentionPeriod',
+      ];
+
+      const toKebab = (key) => key.replace(/([A-Z])/g, '-$1').toLowerCase();
+
+      // ── Load ──────────────────────────────────────────────────────────────
+      const loadSettings = async () => {
+        syncStatus.textContent = 'Loading settings...';
+        try {
+          const res = await fetch('/api/settings');
+          if (!res.ok) throw new Error('Failed to load settings.');
+          const settingsList = await res.json();
+          const stored = {};
+          settingsList.forEach(s => { stored[s.key] = s.value; });
+
+          keys.forEach((key) => {
+            const element = document.getElementById(toKebab(key));
+            if (!element) return;
+            const value = stored[key];
+            if (value === undefined || value === null) return;
+            if (element.type === 'checkbox') {
+              element.checked = (value === 'true' || value === true);
+            } else {
+              element.value = value;
+            }
+          });
+          syncStatus.textContent = 'Settings loaded from server.';
+        } catch (err) {
+          syncStatus.textContent = 'Could not load settings: ' + err.message;
+        }
+      };
+
+      // ── Save ──────────────────────────────────────────────────────────────
+      const saveSettings = async () => {
+        syncStatus.textContent = 'Saving...';
+        const promises = keys.map(async (key) => {
+          const element = document.getElementById(toKebab(key));
+          if (!element) return;
+          const value = element.type === 'checkbox' ? String(element.checked) : element.value;
+          return fetch(`/api/settings/${key}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ value }),
+          });
+        });
+        try {
+          await Promise.all(promises);
+          syncStatus.textContent = '✅ Settings saved to server.';
+          // Hide stale preview after save
+          profilePreview.style.display = 'none';
+        } catch (err) {
+          syncStatus.textContent = 'Save failed: ' + err.message;
+        }
+      };
+
+      // ── Preview Profile ───────────────────────────────────────────────────
+      btnPreview.addEventListener('click', async () => {
+        const description = document.getElementById('business-profile').value.trim();
+        if (!description) {
+          alert('Please enter a business description first.');
+          return;
+        }
+        btnPreview.disabled = true;
+        btnPreview.textContent = 'Parsing...';
+        try {
+          const res = await fetch('/api/settings/parse-profile', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ description }),
+          });
+          if (!res.ok) throw new Error('Parse failed');
+          const data = await res.json();
+
+          document.getElementById('prev-name').textContent = data.name || '—';
+          document.getElementById('prev-services').textContent =
+            data.services.length ? data.services.join(', ') : '— (not detected)';
+          document.getElementById('prev-hours').textContent = data.hours_display || '— (not detected)';
+          document.getElementById('prev-location').textContent = data.location || '— (not detected)';
+
+          const warning = document.getElementById('prev-warning');
+          warning.style.display = (!data.services.length || !data.hours_display) ? 'block' : 'none';
+
+          profilePreview.style.display = 'block';
+          profilePreview.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        } catch (err) {
+          alert('Preview failed: ' + err.message);
+        } finally {
+          btnPreview.disabled = false;
+          btnPreview.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Preview parsed profile`;
+        }
+      });
+
+      settingsForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        saveSettings();
+      });
+
+      saveButton.addEventListener('click', saveSettings);
+      loadSettings();
+    </script>
+  </body>
+</html>
+

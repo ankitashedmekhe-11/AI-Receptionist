@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="#0D0F14">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Backend Server URL"
+        android:textColor="#8892A4"
+        android:textSize="12sp"
+        android:fontFamily="sans-serif-medium"
+        android:textAllCaps="true"
+        android:letterSpacing="0.1"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/et_server_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="ws://192.168.x.x:8000/ws/audio"
+        android:textColorHint="#4A5568"
+        android:textColor="#FFFFFF"
+        android:background="#161922"
+        android:textSize="14sp"
+        android:fontFamily="monospace"
+        android:padding="16dp"
+        android:inputType="textUri"
+        android:singleLine="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter your PC's local IP address. Find it with:\n  Windows: ipconfig\n  Look for IPv4 under Wi-Fi adapter\n\nExample: ws://192.168.1.5:8000/ws/audio\n\nBoth phone and PC must be on the same Wi-Fi network."
+        android:textColor="#8892A4"
+        android:textSize="12sp"
+        android:lineSpacingMultiplier="1.6"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp" />
+
+    <Button
+        android:id="@+id/btn_save_settings"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:text="Save and Go Back"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:background="#4F46E5"
+        android:layout_marginBottom="12dp" />
+
+    <Button
+        android:id="@+id/btn_reset_settings"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:text="Reset to Default"
+        android:textColor="#8892A4"
+        android:textSize="15sp"
+        android:background="#161922" />
+
+</LinearLayout>

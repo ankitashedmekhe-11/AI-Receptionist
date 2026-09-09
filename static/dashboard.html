@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Receptionist — Console</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/dashboard.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+
+      <!-- ══ SIDEBAR ══════════════════════════════════════════════════════ -->
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.7 6.37a2 2 0 012-2.18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L9.91 12a16 16 0 006.29 6.29l1.87-1.87a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+          <div>
+            <p class="brand-name">AI Receptionist</p>
+            <div class="brand-online"><span class="dot-green"></span>Online</div>
+          </div>
+        </div>
+
+        <nav>
+          <p class="nav-group-label">Workspace</p>
+          <div class="nav-items">
+            <a class="nav-item active" href="/overview" data-route>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+              Overview
+            </a>
+            <a class="nav-item" href="/calls" data-route>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.7 6.37a2 2 0 012-2.18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L9.91 12a16 16 0 006.29 6.29l1.87-1.87a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+              Calls
+              <span class="nav-count" id="nav-calls-badge"></span>
+            </a>
+            <a class="nav-item" href="/appointments" data-route>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Appointments
+            </a>
+            <a class="nav-item" href="/customers" data-route>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+              Customers
+            </a>
+            <a class="nav-item" href="/analytics" data-route>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              Analytics
+            </a>
+          </div>
+
+          <p class="nav-group-label">System</p>
+          <div class="nav-items">
+            <a class="nav-item" href="/settings">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M5.34 18.66l-1.41 1.41M19.07 19.07l-1.41-1.41M5.34 5.34L3.93 3.93M22 12h-2M4 12H2M12 22v-2M12 4V2"/></svg>
+              Settings
+            </a>
+          </div>
+        </nav>
+
+        <div class="sidebar-chip">
+          <div class="chip-dot"></div>
+          <div>
+            <p class="chip-title">AI Engine</p>
+            <p class="chip-sub">Whisper · spaCy · gTTS</p>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ══ MAIN ═════════════════════════════════════════════════════════ -->
+      <div class="workspace">
+
+        <!-- Topbar -->
+        <header class="topbar">
+          <div>
+            <h1 class="page-title">Command Center</h1>
+            <p class="page-sub">AI-powered reception dashboard</p>
+          </div>
+          <div class="topbar-actions">
+            <label class="search-wrap" for="search-input">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input id="search-input" type="search" placeholder="Search…" />
+              <kbd>/</kbd>
+            </label>
+            <button class="tb-btn" id="refresh-button" title="Refresh" aria-label="Refresh">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+            </button>
+            <span class="tb-time" id="last-updated">—</span>
+            <button class="tb-avatar" aria-label="Profile">AD</button>
+          </div>
+        </header>
+
+        <main class="content">
+
+          <!-- ══════════════════════════════════════════════════════════════
+               OVERVIEW (default route)
+          ═══════════════════════════════════════════════════════════════ -->
+          <div id="section-overview">
+
+            <!-- 4-stat strip -->
+            <section class="stats-strip">
+              <div class="stat-hero">
+                <div class="stat-hero-top">
+                  <span class="stat-icon-circle">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  </span>
+                  <span class="stat-label">AI Status</span>
+                </div>
+                <div id="reception-status" class="status-pill">
+                  <span class="status-dot"></span>Listening
+                </div>
+                <p class="stat-desc" id="reception-description">Waiting for calls</p>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-top">
+                  <span class="stat-icon-circle"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+                  <span class="stat-label">Today</span>
+                </div>
+                <p class="stat-num" id="today-count">—</p>
+                <p class="stat-desc">Appointments</p>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-top">
+                  <span class="stat-icon-circle"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.7 6.37a2 2 0 012-2.18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L9.91 12a16 16 0 006.29 6.29l1.87-1.87a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></span>
+                  <span class="stat-label">Calls Today</span>
+                </div>
+                <p class="stat-num" id="calls-count">—</p>
+                <p class="stat-desc">Since midnight</p>
+              </div>
+
+              <div class="stat-card stat-card--warn">
+                <div class="stat-top">
+                  <span class="stat-icon-circle"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+                  <span class="stat-label">Missed</span>
+                </div>
+                <p class="stat-num" id="missed-calls-count">—</p>
+                <p class="stat-desc">Follow-up needed</p>
+              </div>
+            </section>
+
+            <!-- Live Receptionist + Attention -->
+            <section class="main-grid">
+              <article class="card live-card" id="reception-overview">
+                <header class="card-header">
+                  <div class="card-title-row">
+                    <span class="live-orb" id="live-dot"></span>
+                    <h2 class="card-title">Live Receptionist</h2>
+                  </div>
+                  <span class="card-badge">Real-time</span>
+                </header>
+
+                <div class="live-tiles">
+                  <div class="live-tile">
+                    <p class="tile-label">Last Caller</p>
+                    <p class="tile-val" id="recent-caller">—</p>
+                  </div>
+                  <div class="live-tile">
+                    <p class="tile-label">Intent</p>
+                    <p class="tile-val" id="recent-intent">—</p>
+                  </div>
+                  <div class="live-tile live-tile--wide">
+                    <p class="tile-label">Last Outcome</p>
+                    <p class="tile-val" id="recent-resolution">—</p>
+                  </div>
+                  <div class="live-tile live-tile--wide live-tile--code">
+                    <p class="tile-label">Transcript</p>
+                    <p class="tile-val mono" id="recent-transcript">—</p>
+                  </div>
+                </div>
+
+                <div class="feed-box">
+                  <div class="feed-header">
+                    <span class="feed-label">Activity Feed</span>
+                    <span class="feed-time" id="last-updated-inner"></span>
+                  </div>
+                  <ul id="activity-items" class="feed-items">
+                    <li class="feed-empty">Waiting for activity…</li>
+                  </ul>
+                </div>
+              </article>
+
+              <article class="card attn-card">
+                <header class="card-header">
+                  <div class="card-title-row">
+                    <span class="attn-orb">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    </span>
+                    <h2 class="card-title">Attention</h2>
+                  </div>
+                  <span class="card-badge card-badge--warn">Priority</span>
+                </header>
+                <ul id="attention-list" class="attn-list">
+                  <li class="feed-empty">No items require action.</li>
+                </ul>
+              </article>
+            </section>
+          </div>
+
+          <!-- ══════════════════════════════════════════════════════════════
+               CALLS (own section — call log only)
+          ═══════════════════════════════════════════════════════════════ -->
+          <div id="section-calls" class="hidden">
+            <div class="section-header">
+              <h2 class="section-title">Recent Calls</h2>
+              <p class="section-sub">Click a call to inspect transcript · <span class="card-hint">Intent highlighted</span></p>
+            </div>
+            <div class="card">
+              <div id="recent-calls" class="rows-wrap">
+                <div class="feed-empty">Loading…</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ══════════════════════════════════════════════════════════════
+               APPOINTMENTS (schedule + book manually)
+          ═══════════════════════════════════════════════════════════════ -->
+          <div id="section-appointments" class="hidden">
+            <div class="section-header">
+              <h2 class="section-title">Appointments</h2>
+              <p class="section-sub">Scheduled bookings &amp; manual entry</p>
+            </div>
+
+            <!-- Quick Book Form -->
+            <article class="card book-card">
+              <header class="card-header">
+                <div class="card-title-row">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  <h3 class="card-title">Book Appointment</h3>
+                </div>
+                <span class="card-badge">Manual Entry</span>
+              </header>
+              <form id="book-appt-form" class="book-form">
+                <div class="book-fields">
+                  <div class="field-group">
+                    <label for="book-customer">Customer</label>
+                    <select id="book-customer" name="customer_id" required>
+                      <option value="">Select customer…</option>
+                    </select>
+                  </div>
+                  <div class="field-group">
+                    <label for="book-service">Service</label>
+                    <input id="book-service" name="service" type="text" placeholder="e.g. Haircut, Consultation…" required />
+                  </div>
+                  <div class="field-group">
+                    <label for="book-date">Date</label>
+                    <input id="book-date" name="date" type="date" required />
+                  </div>
+                  <div class="field-group">
+                    <label for="book-time">Time</label>
+                    <input id="book-time" name="time" type="time" required />
+                  </div>
+                </div>
+                <div class="book-actions">
+                  <button type="submit" class="primary-button">Confirm Booking</button>
+                  <span id="book-status" class="field-note"></span>
+                </div>
+              </form>
+            </article>
+
+            <!-- Upcoming Schedule -->
+            <article class="card">
+              <header class="card-header">
+                <h3 class="card-title">Upcoming Schedule</h3>
+                <span class="card-hint">All confirmed bookings</span>
+              </header>
+              <div id="upcoming-schedule" class="rows-wrap">
+                <div class="feed-empty">Loading…</div>
+              </div>
+            </article>
+          </div>
+
+          <!-- ══════════════════════════════════════════════════════════════
+               CUSTOMERS (profiles only)
+          ═══════════════════════════════════════════════════════════════ -->
+          <div id="section-customers" class="hidden">
+            <div class="section-header">
+              <h2 class="section-title">Customers</h2>
+              <p class="section-sub">All caller profiles sorted by activity</p>
+            </div>
+            <div class="card">
+              <div id="customer-list" class="rows-wrap customer-grid">
+                <div class="feed-empty">Loading…</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ══════════════════════════════════════════════════════════════
+               ANALYTICS (insights only)
+          ═══════════════════════════════════════════════════════════════ -->
+          <div id="section-analytics" class="hidden">
+            <div class="section-header">
+              <h2 class="section-title">Analytics</h2>
+              <p class="section-sub">Call intents, booking trends &amp; service breakdown</p>
+            </div>
+            <div class="analytics-grid">
+              <article class="card">
+                <header class="card-header">
+                  <h3 class="card-title">Appointment Status</h3>
+                </header>
+                <ul id="status-breakdown" class="insight-list"></ul>
+              </article>
+              <article class="card">
+                <header class="card-header">
+                  <h3 class="card-title">Call Intents</h3>
+                </header>
+                <ul id="intent-breakdown" class="insight-list"></ul>
+              </article>
+              <article class="card">
+                <header class="card-header">
+                  <h3 class="card-title">Top Services</h3>
+                </header>
+                <ul id="top-services" class="insight-list"></ul>
+              </article>
+            </div>
+          </div>
+
+        </main>
+      </div>
+    </div>
+
+    <!-- ══ CALL DETAIL DRAWER ═══════════════════════════════════════════ -->
+    <aside id="call-detail-drawer" class="drawer" aria-hidden="true">
+      <div class="drawer-inner">
+        <header class="drawer-head">
+          <div>
+            <p class="drawer-title">Call Details</p>
+            <p class="drawer-sub" id="drawer-call-label">Select a call to inspect</p>
+          </div>
+          <button id="drawer-close" class="tb-btn" aria-label="Close">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </header>
+        <div class="drawer-body">
+          <div class="d-field">
+            <p class="d-label">Caller</p>
+            <p id="drawer-caller-name" class="d-val">—</p>
+            <p id="drawer-caller-phone" class="d-meta">—</p>
+          </div>
+          <div class="d-row">
+            <div class="d-field">
+              <p class="d-label">Intent</p>
+              <p id="drawer-intent" class="d-val">—</p>
+            </div>
+            <div class="d-field">
+              <p class="d-label">Outcome</p>
+              <p id="drawer-resolution" class="d-val">—</p>
+            </div>
+          </div>
+          <div class="d-field">
+            <p class="d-label">Transcript</p>
+            <p id="drawer-transcript" class="d-val mono">—</p>
+          </div>
+
+          <!-- Manual Book section inside drawer -->
+          <div class="d-book-section" id="drawer-book-section">
+            <div class="d-book-header">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span>Book Appointment</span>
+            </div>
+            <form id="drawer-book-form" class="drawer-book-form">
+              <div class="field-group">
+                <label for="drawer-book-customer">Customer</label>
+                <select id="drawer-book-customer" required>
+                  <option value="">Select customer…</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label for="drawer-book-service">Service</label>
+                <input id="drawer-book-service" type="text" placeholder="e.g. Haircut" required />
+              </div>
+              <div class="d-row">
+                <div class="field-group">
+                  <label for="drawer-book-date">Date</label>
+                  <input id="drawer-book-date" type="date" required />
+                </div>
+                <div class="field-group">
+                  <label for="drawer-book-time">Time</label>
+                  <input id="drawer-book-time" type="time" required />
+                </div>
+              </div>
+              <button type="submit" class="primary-button" style="width:100%">Confirm Booking</button>
+              <p id="drawer-book-status" class="field-note" style="margin-top:6px;text-align:center"></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <script src="/static/dashboard.js"></script>
+  </body>
+</html>
