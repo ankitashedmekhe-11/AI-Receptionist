@@ -13,9 +13,9 @@ android {
         versionCode 1
         versionName "1.0"
 
-        // Default server address — update this to your Render URL after first deploy
-        // e.g. "wss://ai-receptionist.onrender.com/ws/audio"
-        buildConfigField "String", "DEFAULT_SERVER_WS_URL", "\"wss://ai-receptionist.onrender.com/ws/audio\""
+        // Default server address — Render deployment
+        // wss://ai-receptionist-d2te.onrender.com/ws/audio
+        buildConfigField "String", "DEFAULT_SERVER_WS_URL", "\"wss://ai-receptionist-d2te.onrender.com/ws/audio\""
     }
 
     buildFeatures {
