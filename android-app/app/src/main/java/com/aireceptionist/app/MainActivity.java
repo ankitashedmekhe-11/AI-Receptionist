@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
         httpClient = new OkHttpClient.Builder()
                 .readTimeout(0, TimeUnit.MILLISECONDS)
-                .pingInterval(30, TimeUnit.SECONDS)
+                .pingInterval(10, TimeUnit.SECONDS)  // Aggressive ping to keep Render connection alive
                 .build();
 
         buildPulseAnimation();
@@ -582,6 +582,12 @@ public class MainActivity extends AppCompatActivity {
                         removeTypingIndicator();
                         addChatBubble("⚠ " + msg.optString("message", "Error"), false);
                         showStatus("Error");
+                        break;
+
+                    case "processing":
+                        // Server received audio and Whisper is running — show status
+                        showStatus("Analyzing…");
+                        updateUI(CallState.PROCESSING);
                         break;
 
                     default:

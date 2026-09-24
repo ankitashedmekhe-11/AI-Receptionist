@@ -159,6 +159,10 @@ async def audio_ws(websocket: WebSocket) -> None:
             audio_bytes = bytes(buffer)
             buffer.clear()
 
+            # ── Notify client immediately so it knows audio was received ──────
+            # This prevents client timeout during the 15-30s Whisper processing
+            await _send_json(websocket, {"type": "processing", "message": "Processing your speech..."})
+
             # ── STT ────────────────────────────────────────────────────────────
             try:
                 text = await asyncio.to_thread(stt.transcribe, audio_bytes)

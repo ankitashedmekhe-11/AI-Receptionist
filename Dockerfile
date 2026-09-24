@@ -22,5 +22,8 @@ COPY . .
 # Expose the port Render will use
 EXPOSE 8000
 
-# Start the server
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Start the server with WebSocket keepalive pings (prevents Render from closing
+# the connection during long STT processing on slow free-tier CPU)
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", \
+     "--ws-ping-interval", "20", "--ws-ping-timeout", "40", \
+     "--timeout-keep-alive", "75"]
