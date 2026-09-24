@@ -50,6 +50,6 @@ def root() -> RedirectResponse:
     return RedirectResponse(url="/dashboard")
 
 
-@app.get("/health")
+@app.api_route("/health", methods=["GET", "HEAD"])
 def health() -> dict[str, str]:
     return {"status": "ok"}
