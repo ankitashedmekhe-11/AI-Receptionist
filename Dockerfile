@@ -1,10 +1,8 @@
 FROM python:3.11-slim
 
-# System deps needed for faster-whisper, audioop, spacy
+# System deps for spaCy and audioop
 RUN apt-get update && apt-get install -y \
     build-essential \
-    libsndfile1 \
-    ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -22,8 +20,7 @@ COPY . .
 # Expose the port Render will use
 EXPOSE 8000
 
-# Start the server with WebSocket keepalive pings (prevents Render from closing
-# the connection during long STT processing on slow free-tier CPU)
+# Start the server with WebSocket keepalive pings
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", \
      "--ws-ping-interval", "20", "--ws-ping-timeout", "40", \
      "--timeout-keep-alive", "75"]

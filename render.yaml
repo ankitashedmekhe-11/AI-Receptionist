@@ -5,6 +5,8 @@ services:
     dockerfilePath: ./Dockerfile
     plan: free
     envVars:
+      - key: GROQ_API_KEY
+        sync: false          # You set this manually in Render dashboard — never commit API keys
       - key: WHISPER_MODEL_SIZE
         value: tiny
       - key: WHISPER_DEVICE

@@ -1,3 +1,10 @@
+"""
+STT service — uses Groq Whisper API for fast cloud transcription.
+
+Groq runs whisper-large-v3-turbo on their hardware in under 1 second.
+Free tier: 7,200 minutes of audio per month.
+Get a free API key at: https://console.groq.com
+"""
 from __future__ import annotations
 
 import io
@@ -5,55 +12,55 @@ import logging
 import os
 import wave
 
-import numpy as np
-from faster_whisper import WhisperModel
-
 logger = logging.getLogger(__name__)
 
-_model: WhisperModel | None = None
+_client = None
 
 
 def init_stt() -> None:
-    """Load the Whisper model into memory. Call once during app startup."""
-    global _model
-    if _model is not None:
+    """Initialize Groq client. Call once during app startup."""
+    global _client
+    api_key = os.getenv("GROQ_API_KEY")
+    if not api_key:
+        logger.warning(
+            "GROQ_API_KEY not set — STT will fail at runtime. "
+            "Get a free key at https://console.groq.com"
+        )
         return
-
-    model_size = os.getenv("WHISPER_MODEL_SIZE", "tiny")
-    device = os.getenv("WHISPER_DEVICE", "cpu")
-    compute_type = os.getenv("WHISPER_COMPUTE_TYPE", "int8")
-
-    logger.info(
-        "Loading faster-whisper model size=%s device=%s compute_type=%s",
-        model_size,
-        device,
-        compute_type,
-    )
-    _model = WhisperModel(model_size, device=device, compute_type=compute_type)
-    logger.info("STT model ready")
+    from groq import Groq
+    _client = Groq(api_key=api_key)
+    logger.info("STT ready: Groq Whisper API (whisper-large-v3-turbo)")
 
 
 def transcribe(audio_bytes: bytes) -> str:
     """
-    Transcribe 16 kHz mono PCM WAV bytes to text.
+    Transcribe 16 kHz mono PCM bytes to text via Groq Whisper API.
 
-    Raises RuntimeError if the model was not initialized.
-    Raises ValueError if the WAV format is not 16 kHz mono PCM.
+    Raises RuntimeError if client not initialized.
+    Returns empty string if audio is too short / silent.
     """
-    global _model
-    if _model is None:
-        raise RuntimeError("STT model not loaded; call init_stt() at startup")
+    global _client
+    if _client is None:
+        raise RuntimeError(
+            "STT not initialized. Set GROQ_API_KEY env variable and restart."
+        )
 
-    samples = _pcm_bytes_to_float32(audio_bytes)
-    segments, _info = _model.transcribe(
-        samples,
-        task="translate",
-        vad_filter=False,
+    if not audio_bytes or len(audio_bytes) < 3200:
+        # Less than 0.1 seconds of audio — skip
+        return ""
+
+    # Wrap raw PCM bytes in a WAV container so Groq can decode it
+    wav_buffer = io.BytesIO()
+    with wave.open(wav_buffer, "wb") as wf:
+        wf.setnchannels(1)       # mono
+        wf.setsampwidth(2)       # 16-bit PCM
+        wf.setframerate(16000)   # 16 kHz
+        wf.writeframes(audio_bytes)
+    wav_buffer.seek(0)
+
+    transcription = _client.audio.transcriptions.create(
+        file=("audio.wav", wav_buffer, "audio/wav"),
+        model="whisper-large-v3-turbo",
+        language="en",
     )
-    return "".join(segment.text for segment in segments).strip()
-
-
-def _pcm_bytes_to_float32(data: bytes) -> np.ndarray:
-    samples = np.frombuffer(data, dtype=np.int16).astype(np.float32)
-    samples /= 32768.0
-    return samples
+    return transcription.text.strip()
