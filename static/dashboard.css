@@ -1009,8 +1009,8 @@ body {
   /* Bottom navigation bar */
   .sidebar::after { content: none; }
 
-  /* Create a mobile bottom nav from nav-items */
-  .nav-items {
+  /* Create a mobile bottom nav from <nav> */
+  nav {
     position: fixed;
     bottom: 0; left: 0; right: 0;
     display: flex !important;
@@ -1021,6 +1021,10 @@ body {
     z-index: 200;
     gap: 0;
     box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+  }
+  
+  .nav-items {
+    display: contents !important;
   }
 
   .nav-item {
