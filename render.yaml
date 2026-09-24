@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: ai-receptionist
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    envVars:
+      - key: WHISPER_MODEL_SIZE
+        value: tiny
+      - key: WHISPER_DEVICE
+        value: cpu
+      - key: WHISPER_COMPUTE_TYPE
+        value: int8
+      - key: DATABASE_URL
+        value: sqlite:///./receptionist.db
+    disk:
+      name: receptionist-data
+      mountPath: /app
+      sizeGB: 1

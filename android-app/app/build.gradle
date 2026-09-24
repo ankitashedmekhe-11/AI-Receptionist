@@ -13,9 +13,9 @@ android {
         versionCode 1
         versionName "1.0"
 
-        // Default server address — change this to your PC's local IP when testing
-        // e.g. "ws://10.215.176.170:8000/ws/audio"
-        buildConfigField "String", "DEFAULT_SERVER_WS_URL", "\"ws://10.215.176.170:8000/ws/audio\""
+        // Default server address — update this to your Render URL after first deploy
+        // e.g. "wss://ai-receptionist.onrender.com/ws/audio"
+        buildConfigField "String", "DEFAULT_SERVER_WS_URL", "\"wss://ai-receptionist.onrender.com/ws/audio\""
     }
 
     buildFeatures {

@@ -23,7 +23,7 @@
         android:id="@+id/et_server_url"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="ws://192.168.x.x:8000/ws/audio"
+        android:hint="wss://your-app.onrender.com/ws/audio"
         android:textColorHint="#4A5568"
         android:textColor="#FFFFFF"
         android:background="#161922"
@@ -36,7 +36,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Enter your PC's local IP address. Find it with:\n  Windows: ipconfig\n  Look for IPv4 under Wi-Fi adapter\n\nExample: ws://192.168.1.5:8000/ws/audio\n\nBoth phone and PC must be on the same Wi-Fi network."
+        android:text="Enter your Render server URL.\n\nFor Render deployment:\nwss://your-app-name.onrender.com/ws/audio\n\nFor local testing (same Wi-Fi):\nws://192.168.x.x:8000/ws/audio"
         android:textColor="#8892A4"
         android:textSize="12sp"
         android:lineSpacingMultiplier="1.6"

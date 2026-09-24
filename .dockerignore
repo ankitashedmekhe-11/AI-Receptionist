@@ -1,0 +1,13 @@
+# Don't send these to Docker build context
+.git
+.venv
+.venv310
+__pycache__
+*.pyc
+*.db
+*.sqlite3
+android-app
+.idea
+.vscode
+README.md
+promptt.md
