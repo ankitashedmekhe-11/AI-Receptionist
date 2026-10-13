@@ -284,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void playAudioBytes(byte[] data) {
         try {
-            java.io.File tmpFile = java.io.File.createTempFile("tts_", ".wav", getCacheDir());
+            java.io.File tmpFile = java.io.File.createTempFile("tts_", ".mp3", getCacheDir());
             try (java.io.FileOutputStream fos = new java.io.FileOutputStream(tmpFile)) {
                 fos.write(data);
             }

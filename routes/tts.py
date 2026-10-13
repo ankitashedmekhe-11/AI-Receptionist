@@ -7,12 +7,15 @@ router = APIRouter(prefix="/tts", tags=["tts"])
 
 
 @router.get("/speak")
-def speak(text: str = Query(..., min_length=1), voice: str = Query("Arista-PlayAI")) -> StreamingResponse:
+def speak(
+    text: str = Query(..., min_length=1),
+    model: str = Query("aura-asteria-en"),
+) -> StreamingResponse:
     try:
-        audio_bytes = synthesize_text(text, voice=voice)
+        audio_bytes = synthesize_text(text, model=model)
     except Exception as exc:
         raise HTTPException(status_code=400, detail=str(exc))
     return StreamingResponse(
         content=iter([audio_bytes]),
-        media_type="audio/wav",
+        media_type="audio/mpeg",
     )

@@ -6,7 +6,9 @@ services:
     plan: free
     envVars:
       - key: GROQ_API_KEY
-        sync: false          # You set this manually in Render dashboard — never commit API keys
+        sync: false          # STT (Whisper) — set manually in Render dashboard
+      - key: DEEPGRAM_API_KEY
+        sync: false          # TTS (Aura) — sign up free at console.deepgram.com
       - key: WHISPER_MODEL_SIZE
         value: tiny
       - key: WHISPER_DEVICE

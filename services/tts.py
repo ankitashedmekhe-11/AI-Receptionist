@@ -1,9 +1,12 @@
 """
-TTS service — uses Groq Orpheus TTS (Canopy Labs) for reliable, production-grade voice synthesis.
+TTS service — uses Deepgram Aura TTS for stable, production-grade voice synthesis.
 
-Groq hosts the Orpheus model on their LPU hardware — same GROQ_API_KEY used for STT (Whisper).
-Model: canopylabs/orpheus-v1-english
-Docs: https://console.groq.com/docs/text-to-speech
+Deepgram Aura is purpose-built for real-time voice AI. No model decommissioning drama.
+Free tier: $200 in credits on signup (https://console.deepgram.com)
+Voice: aura-asteria-en — warm, clear, professional female voice.
+Docs: https://developers.deepgram.com/docs/tts-rest
+
+Set DEEPGRAM_API_KEY in your environment / Render dashboard.
 """
 from __future__ import annotations
 
@@ -11,71 +14,79 @@ import asyncio
 import logging
 import os
 
+import httpx
+
 logger = logging.getLogger(__name__)
 
-# Orpheus voices available on Groq (English model).
-# "hannah" — clear, warm, professional female voice. Perfect for a receptionist.
-# Other options: "troy" (male), "autumn" (female)
-DEFAULT_VOICE = "hannah"
-DEFAULT_MODEL = "canopylabs/orpheus-v1-english"
+DEEPGRAM_TTS_URL = "https://api.deepgram.com/v1/speak"
 
-_client = None
+# Aura voices (English): aura-asteria-en, aura-luna-en, aura-stella-en,
+#                        aura-athena-en, aura-hera-en, aura-orion-en,
+#                        aura-arcas-en, aura-perseus-en, aura-angus-en,
+#                        aura-orpheus-en, aura-helios-en, aura-zeus-en
+DEFAULT_MODEL = "aura-asteria-en"   # Warm, professional female — ideal for receptionist
+
+
+def _get_api_key() -> str:
+    key = os.getenv("DEEPGRAM_API_KEY")
+    if not key:
+        raise RuntimeError(
+            "DEEPGRAM_API_KEY not set. "
+            "Sign up free at https://console.deepgram.com and add the key to your environment."
+        )
+    return key
 
 
 def init_tts() -> None:
-    """Initialize Groq client for TTS. Call once during app startup."""
-    global _client
-    api_key = os.getenv("GROQ_API_KEY")
-    if not api_key:
+    """Validate that DEEPGRAM_API_KEY is present at startup."""
+    key = os.getenv("DEEPGRAM_API_KEY")
+    if not key:
         logger.warning(
-            "GROQ_API_KEY not set — TTS will fail at runtime. "
-            "Get a free key at https://console.groq.com"
+            "DEEPGRAM_API_KEY not set — TTS will fail at runtime. "
+            "Get $200 free at https://console.deepgram.com"
         )
-        return
-    from groq import Groq
-    _client = Groq(api_key=api_key)
-    logger.info("TTS engine: Groq PlayAI (%s / %s)", DEFAULT_MODEL, DEFAULT_VOICE)
+    else:
+        logger.info("TTS engine: Deepgram Aura (%s)", DEFAULT_MODEL)
 
 
-def synthesize_text(text: str, voice: str = DEFAULT_VOICE) -> bytes:
+def synthesize_text(text: str, model: str = DEFAULT_MODEL) -> bytes:
     """
-    Synthesize text to WAV audio bytes via Groq PlayAI TTS.
+    Synthesize text to MP3 audio bytes via Deepgram Aura REST API.
 
-    Returns raw WAV bytes ready to stream to the client.
-    Raises RuntimeError if client not initialized or synthesis fails.
+    Returns raw MP3 bytes ready to stream over WebSocket.
+    Raises RuntimeError on failure.
     """
-    global _client
-    if _client is None:
-        # Lazy init attempt (e.g. during local dev without explicit init call)
-        init_tts()
-    if _client is None:
-        raise RuntimeError(
-            "TTS not initialized. Set GROQ_API_KEY env variable and restart."
-        )
-
     if not text or not text.strip():
         raise ValueError("No text provided for speech synthesis.")
 
+    api_key = _get_api_key()
+
     try:
-        response = _client.audio.speech.create(
-            model=DEFAULT_MODEL,
-            voice=voice,
-            input=text,
-            response_format="wav",
+        response = httpx.post(
+            f"{DEEPGRAM_TTS_URL}?model={model}",
+            headers={
+                "Authorization": f"Token {api_key}",
+                "Content-Type": "application/json",
+            },
+            json={"text": text},
+            timeout=30.0,
         )
-        # The Groq SDK returns a binary response — read all bytes
-        audio_bytes = response.read()
+        response.raise_for_status()
+        audio_bytes = response.content
         if not audio_bytes:
-            raise RuntimeError("Groq TTS returned empty audio.")
+            raise RuntimeError("Deepgram TTS returned empty audio.")
         return audio_bytes
+    except httpx.HTTPStatusError as exc:
+        logger.error("Deepgram TTS HTTP error %s: %s", exc.response.status_code, exc.response.text)
+        raise RuntimeError(f"TTS synthesis failed: {exc.response.status_code} {exc.response.text}") from exc
     except Exception as exc:
-        logger.error("Groq PlayAI TTS failed: %s", exc)
+        logger.error("Deepgram TTS failed: %s", exc)
         raise RuntimeError(f"TTS synthesis failed: {exc}") from exc
 
 
-async def synthesize_text_async(text: str, voice: str = DEFAULT_VOICE) -> bytes:
+async def synthesize_text_async(text: str, model: str = DEFAULT_MODEL) -> bytes:
     """
-    Async wrapper for synthesize_text — runs the blocking Groq SDK call
-    in a thread pool so it doesn't block the FastAPI event loop.
+    Async wrapper — runs blocking Deepgram HTTP call in a thread pool
+    so it doesn't block the FastAPI event loop.
     """
-    return await asyncio.to_thread(synthesize_text, text, voice)
+    return await asyncio.to_thread(synthesize_text, text, model)
