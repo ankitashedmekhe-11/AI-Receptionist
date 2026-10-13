@@ -282,9 +282,9 @@ public class MainActivity extends AppCompatActivity {
 
     // ── TTS playback ────────────────────────────────────────────────────────
 
-    private void playMp3Bytes(byte[] data) {
+    private void playAudioBytes(byte[] data) {
         try {
-            java.io.File tmpFile = java.io.File.createTempFile("tts_", ".mp3", getCacheDir());
+            java.io.File tmpFile = java.io.File.createTempFile("tts_", ".wav", getCacheDir());
             try (java.io.FileOutputStream fos = new java.io.FileOutputStream(tmpFile)) {
                 fos.write(data);
             }
@@ -569,7 +569,7 @@ public class MainActivity extends AppCompatActivity {
                         synchronized (ttsBuffer) { audioData = ttsBuffer.toByteArray(); }
                         if (audioData.length > 0) {
                             final byte[] finalData = audioData;
-                            executor.submit(() -> playMp3Bytes(finalData));
+                            executor.submit(() -> playAudioBytes(finalData));
                         }
                         break;
 

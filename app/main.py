@@ -23,6 +23,7 @@ async def lifespan(app: FastAPI):
     init_db()
     stt.init_stt()
     nlu.init_nlu()
+    tts.init_tts()
     yield
 
 
