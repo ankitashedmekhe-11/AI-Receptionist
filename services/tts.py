@@ -1,9 +1,9 @@
 """
-TTS service — uses Groq PlayAI TTS for reliable, fast, production-grade voice synthesis.
+TTS service — uses Groq Orpheus TTS (Canopy Labs) for reliable, production-grade voice synthesis.
 
-Groq runs PlayAI Dialog models on their LPU hardware.
-Same GROQ_API_KEY used for STT (Whisper) — no extra credentials needed.
-Docs: https://console.groq.com/docs/text-speech
+Groq hosts the Orpheus model on their LPU hardware — same GROQ_API_KEY used for STT (Whisper).
+Model: canopylabs/orpheus-v1-english
+Docs: https://console.groq.com/docs/text-to-speech
 """
 from __future__ import annotations
 
@@ -13,11 +13,11 @@ import os
 
 logger = logging.getLogger(__name__)
 
-# PlayAI voices available on Groq.
-# "Arista-PlayAI" is a clear, professional female voice — ideal for a receptionist.
-# Other options: "Fritz-PlayAI" (male), "Celeste-PlayAI", "Atlas-PlayAI", etc.
-DEFAULT_VOICE = "Arista-PlayAI"
-DEFAULT_MODEL = "playai-tts"
+# Orpheus voices available on Groq (English model).
+# "hannah" — clear, warm, professional female voice. Perfect for a receptionist.
+# Other options: "troy" (male), "autumn" (female)
+DEFAULT_VOICE = "hannah"
+DEFAULT_MODEL = "canopylabs/orpheus-v1-english"
 
 _client = None
 
